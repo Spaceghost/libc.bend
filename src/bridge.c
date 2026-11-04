@@ -57,28 +57,30 @@ static Term lb_bytes(Env e, const unsigned char* p, u64 n) {
   return s;
 }
 
-#define LB_WORD(name, def)                                        \
+// The compiler rewrites FID(name) textually before the C preprocessor runs,
+// so each entry spells its FID out; the macro only takes the resolved id.
+#define LB_WORD(name, fid)                                        \
   uint32_t libcbend_##name(uint32_t a) {                          \
     Env  e    = lb_enter();                                       \
     Term v[1] = { (Term)a };                                      \
-    return (uint32_t)lb_leave(lb_run(e, FID(def), v, 1));         \
+    return (uint32_t)lb_leave(lb_run(e, fid, v, 1));              \
   }
 
-LB_WORD(isalnum, c_isalnum)
-LB_WORD(isalpha, c_isalpha)
-LB_WORD(isblank, c_isblank)
-LB_WORD(iscntrl, c_iscntrl)
-LB_WORD(isdigit, c_isdigit)
-LB_WORD(isgraph, c_isgraph)
-LB_WORD(islower, c_islower)
-LB_WORD(isprint, c_isprint)
-LB_WORD(ispunct, c_ispunct)
-LB_WORD(isspace, c_isspace)
-LB_WORD(isupper, c_isupper)
-LB_WORD(isxdigit, c_isxdigit)
-LB_WORD(tolower, c_tolower)
-LB_WORD(toupper, c_toupper)
-LB_WORD(abs, c_abs)
+LB_WORD(isalnum, FID(c_isalnum))
+LB_WORD(isalpha, FID(c_isalpha))
+LB_WORD(isblank, FID(c_isblank))
+LB_WORD(iscntrl, FID(c_iscntrl))
+LB_WORD(isdigit, FID(c_isdigit))
+LB_WORD(isgraph, FID(c_isgraph))
+LB_WORD(islower, FID(c_islower))
+LB_WORD(isprint, FID(c_isprint))
+LB_WORD(ispunct, FID(c_ispunct))
+LB_WORD(isspace, FID(c_isspace))
+LB_WORD(isupper, FID(c_isupper))
+LB_WORD(isxdigit, FID(c_isxdigit))
+LB_WORD(tolower, FID(c_tolower))
+LB_WORD(toupper, FID(c_toupper))
+LB_WORD(abs, FID(c_abs))
 
 uint32_t libcbend_strlen(const char* s) {
   u64 n = 0;

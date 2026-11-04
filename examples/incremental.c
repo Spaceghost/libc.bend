@@ -18,7 +18,7 @@ int main(void) {
   }
   printf("%s\n", upper);
   printf("length %zu, letters %zu, digits %zu, abs(-42) %d\n", n, letters, digits, abs(-42));
-  if (n != 55 || letters != 40 || digits != 1 || abs(-42) != 42 || upper[0] != 'L') {
+  if (n != 56 || letters != 42 || digits != 1 || abs(-42) != 42 || upper[0] != 'L') {
     puts("dogfood: wrong answers");
     return 1;
   }

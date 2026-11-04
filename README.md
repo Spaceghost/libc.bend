@@ -99,7 +99,9 @@ items, not builds.
 
 Every target is run in the Incus container `nelibc-writ` on bak and in CI on
 the bak runner; see [`AGENTS.md`](AGENTS.md). Results are reported only for
-the artifact they were observed on.
+the artifact they were observed on. Last observed: 2026-11-04, `smoke-matrix`
+in `nelibc-writ` (Zig 0.17.0, Bend 2.0.39, glibc 2.36) over nelibc `5dd38c1`:
+`smoke: OK`, 273 diff lines identical, dogfood OK.
 
 ## Project guide
 

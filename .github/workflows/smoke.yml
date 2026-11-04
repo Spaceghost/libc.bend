@@ -16,7 +16,7 @@ jobs:
       NELUA: /opt/nelua/nelua
       ZIG: /opt/zig/zig
       BEND: /opt/bend-2.0.39/bend/bin/bend
-      NELIBC_REF: 68cb3c7
+      NELIBC_REF: 5dd38c1
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4

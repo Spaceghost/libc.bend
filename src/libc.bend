@@ -77,11 +77,11 @@ def c_tolower(+c: U32) -> U32:
 # stdlib
 # ------
 
-# abs over the two's-complement word: flip the bits under the sign and add it
-# back. abs(INT_MIN) wraps to INT_MIN, as the C standard leaves it undefined.
+# abs over the two's-complement word: with s the sign bit and m its mask,
+# (c xor m) + s. abs(INT_MIN) wraps to INT_MIN, as C leaves it undefined.
 def c_abs(+c: U32) -> U32:
-  +s = U32.sub(0, U32.shrn(c, 31n))
-  U32.add(U32.xor(c, s), s)
+  +s = U32.shrn(c, 31n)
+  U32.add(U32.xor(c, U32.sub(0, s)), s)
 
 # string
 # ------
