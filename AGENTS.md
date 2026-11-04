@@ -11,10 +11,8 @@ Never compile or run tests on the workstation. Every build, smoke, diff, and
 dogfood runs inside the Incus container `nelibc-writ` on bak (Debian 12; Zig
 0.17.0 at `/opt/zig/zig`, Bend 2.0.39 at `/opt/bend-2.0.39/bend/bin/bend`,
 Nelua `3c29419` at `/opt/nelua/nelua` for nelibc). The checkout is
-`/work/libc.bend`, beside nelibc's `/work/nelibc`. The repository is private,
-so until the container has credentials the tree is shipped with
-`git archive` over `ssh bak incus exec nelibc-writ -- su build -c "bash -s"`
-rather than pulled. Run as the unprivileged `build` user.
+`/work/libc.bend`, a clone of `origin/main`, beside nelibc's `/work/nelibc`;
+push, then `git pull` there. Run as the unprivileged `build` user.
 
 ```sh
 ssh bak incus exec nelibc-writ -- su build -c 'cd /work/libc.bend && git pull -q && \
