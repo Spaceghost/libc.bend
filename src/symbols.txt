@@ -1,0 +1,16 @@
+abs
+isalnum
+isalpha
+isblank
+iscntrl
+isdigit
+isgraph
+islower
+isprint
+ispunct
+isspace
+isupper
+isxdigit
+strlen
+tolower
+toupper

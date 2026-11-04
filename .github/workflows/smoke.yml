@@ -1,0 +1,41 @@
+name: smoke matrix
+# Runs on the self-hosted bak runner (Incus container gh-runners on bak), which
+# carries the pinned toolchains under /opt: Nelua (Spaceghost/nelua-lang
+# 3c29419), Zig 0.17.0, and Bend 2.0.39. nelibc is built from a pinned commit
+# first; libc.bend sits on its hybrid (zig, glibc) archive.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  smoke-matrix:
+    runs-on: [self-hosted, linux, x64, bak]
+    timeout-minutes: 40
+    env:
+      NELUA: /opt/nelua/nelua
+      ZIG: /opt/zig/zig
+      BEND: /opt/bend-2.0.39/bend/bin/bend
+      NELIBC_REF: 68cb3c7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: Spaceghost/nelibc
+          ref: ${{ env.NELIBC_REF }}
+          path: nelibc
+      - name: toolchains
+        run: |
+          "$NELUA" --version | head -1
+          "$ZIG" version
+          BEND_NO_TELEMETRY=1 "$BEND" version
+      - name: nelibc hybrid archive
+        run: make -C nelibc lib-zig NELUA="$NELUA" ZIG="$ZIG"
+      - name: smoke matrix
+        run: make smoke-matrix NELIBC=nelibc ZIG="$ZIG" BEND="$BEND"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-logs
+          path: build/dump-*.txt
+          if-no-files-found: ignore
